@@ -297,19 +297,19 @@ async function close(vm, workItem) {
 // reopen existing work item
 async function reopen(vm, workItem) {
 	let patchDocument = [];
+	if (workItem.fields["System.State"] == vm.env.closedState ) {
+		patchDocument.push({
+			op: "add",
+			path: "/fields/System.State",
+			value: vm.env.reopenedState,
+		});
 
-	patchDocument.push({
-		op: "add",
-		path: "/fields/System.State",
-		value: vm.env.reopenedState,
-	});
-
-	patchDocument.push({
-		op: "add",
-		path: "/fields/System.History",
-		value: vm.env.reopenedState,
-	});
-
+		patchDocument.push({
+			op: "add",
+			path: "/fields/System.History",
+			value: vm.env.reopenedState,
+		});
+	}
 	if (patchDocument.length > 0) {
 		return await updateWorkItem(patchDocument, workItem.id, vm.env);
 	} else {

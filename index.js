@@ -299,11 +299,12 @@ async function reopen(vm, workItem) {
 	let patchDocument = [];
 	console.log("Error: reached line 300");
 	console.log( vm.env.reopenedState );
+	
 	if (workItem.fields["System.State"] == vm.env.closedState ) {
 		patchDocument.push({
 			op: "add",
 			path: "/fields/System.State",
-			value: vm.env.reopenedState,
+			value: "New",
 		});
 
 	//	patchDocument.push({

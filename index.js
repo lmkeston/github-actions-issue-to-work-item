@@ -23,7 +23,7 @@ async function main() {
 			env.ado_wit = "User Story";
 			env.ado_close_state = "Closed";
 			env.ado_new_state = "New";
-			env.ado_reopened_state = "New";
+
 
 			console.log("Set values from test payload");
 			vm = getValuesFromPayload(testPayload, env);
@@ -198,6 +198,60 @@ async function create(vm) {
 	return workItemSaveResult;
 }
 
+// assign a mapped user
+async function assign(vm, workItem) {
+	let patchDocument = [];
+
+	try {
+		/* const response = await fetch(util.format(vm.env.idMappingUrl, vm.assignee), {
+			headers: { 
+				'Content-Type': 'application/json',
+				'Authorization': 'Basic ' + Buffer.from(':' + vm.env.idMappingPat).toString('base64'),
+			},
+		});
+
+		const json = await response.json();
+		var aadUser = jp.value(json, vm.env.idMappingQuery);
+		if (aadUser == undefined) {
+			// console.log("JSON data: " + json);
+			core.setFailed("User mapping for " + vm.assignee + " not found.");
+		} 
+		// Make changes only if AB issue is unassigned or assigned to a different user.
+		else if ( workItem.fields["System.AssignedTo"] == undefined || aadUser != workItem.fields["System.AssignedTo"].uniqueName ) { */
+var aadUser='likeston@microsoft.com'
+			patchDocument.push({
+				op: "add",
+				path: "/fields/System.AssignedTo",
+				value: aadUser,
+			});
+
+			/* patchDocument.push({
+				op: "add",
+				path: "/fields/System.History",
+				value:
+					'Assigned to GitHub user <a href="https://github.com/' +
+					+ vm.assignee +
+					'" target="_new">' +
+					vm.assignee +
+					'</a>.',
+			}); */
+		//}
+	} catch (error) {
+		console.log("Failed to map user ID.");
+		console.log(error);
+		core.setFailed(error.toString());
+	}
+
+	if (patchDocument.length > 0) {
+		return await updateWorkItem(patchDocument, workItem.id, vm.env);
+	} else {
+		return null;
+	}
+}
+
+
+
+
 // update existing working item
 async function update(vm, workItem) {
 	let patchDocument = [];
@@ -297,22 +351,19 @@ async function close(vm, workItem) {
 // reopen existing work item
 async function reopen(vm, workItem) {
 	let patchDocument = [];
-	console.log("Error: reached line 300");
-	console.log( vm.env.reopenedState );
-	
-	if (workItem.fields["System.State"] == vm.env.closedState ) {
+
 		patchDocument.push({
 			op: "add",
 			path: "/fields/System.State",
 			value: "New",
 		});
 
-	//	patchDocument.push({
-//			op: "add",
-//			path: "/fields/System.History",
-//			value: vm.env.reopenedState,
-//		});
-	}
+		patchDocument.push({
+			op: "add",
+			path: "/fields/System.History",
+			value: "New",
+		});
+	
 	if (patchDocument.length > 0) {
 		return await updateWorkItem(patchDocument, workItem.id, vm.env);
 	} else {
@@ -499,7 +550,6 @@ function getValuesFromPayload(payload, env) {
 			wit: env.ado_wit != undefined ? env.ado_wit : "Issue",
 			closedState: env.ado_close_state != undefined ? env.ado_close_state : "Closed",
 			newState: env.ado_new_state != undefined ? env.ado_new_State : "New",
-			reopenedState: env.ado_reopened_state != undefined ? env.ado_reopend_State : "New",
 			bypassRules: env.ado_bypassrules != undefined ? env.ado_bypassrules : false
 		}
 	};

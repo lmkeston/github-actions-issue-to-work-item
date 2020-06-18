@@ -82,7 +82,7 @@ async function main() {
 				workItem != null ? await reopen(vm, workItem) : "";
 				break;
 			case "assigned":
-				console.log("assigned action is not yet implemented");
+				workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "labeled":
 				workItem != null ? await label(vm, workItem) : "";

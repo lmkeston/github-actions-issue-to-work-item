@@ -23,6 +23,7 @@ async function main() {
 			env.ado_wit = "User Story";
 			env.ado_close_state = "Closed";
 			env.ado_new_state = "New";
+			env.ado_reopened_state = "New";
 
 			console.log("Set values from test payload");
 			vm = getValuesFromPayload(testPayload, env);
@@ -300,7 +301,7 @@ async function reopen(vm, workItem) {
 	patchDocument.push({
 		op: "add",
 		path: "/fields/System.State",
-		value: vm.env.newState,
+		value: vm.env.reopenedState,
 	});
 
 	patchDocument.push({
@@ -495,6 +496,7 @@ function getValuesFromPayload(payload, env) {
 			wit: env.ado_wit != undefined ? env.ado_wit : "Issue",
 			closedState: env.ado_close_state != undefined ? env.ado_close_state : "Closed",
 			newState: env.ado_new_state != undefined ? env.ado_new_State : "New",
+			reopenedState: env.ado_reopened_state != undefined ? env.ado_reopend_State : "New",
 			bypassRules: env.ado_bypassrules != undefined ? env.ado_bypassrules : false
 		}
 	};

@@ -253,7 +253,31 @@ var aadUser='likeston@microsoft.com'
 }
 
 
+// unassign user
+async function unassign(vm, workItem) {
+	let patchDocument = [];
 
+	if (workItem.fields["System.AssignedTo"] != undefined) {
+		patchDocument.push({
+			op: "add",
+			path: "/fields/System.AssignedTo",
+			value: "",
+		});
+
+		patchDocument.push({
+			op: "add",
+			path: "/fields/System.History",
+			value:
+				'GitHub issue unassigned',
+		});
+	}
+
+	if (patchDocument.length > 0) {
+		return await updateWorkItem(patchDocument, workItem.id, vm.env);
+	} else {
+		return null;
+	}
+}
 
 // update existing working item
 async function update(vm, workItem) {

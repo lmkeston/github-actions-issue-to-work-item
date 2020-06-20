@@ -84,8 +84,6 @@ async function main() {
 				workItem != null ? await reopen(vm, workItem) : "";
 				break;
 			case "assigned":
-				console.log("Assignee");
-				console.log(vm.assignee.login);
 				workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "unassigned":
@@ -209,33 +207,40 @@ async function create(vm) {
 async function assign(vm, workItem) {
 	let patchDocument = [];
 
-	try {
-		/* const response = await fetch(util.format(vm.env.idMappingUrl, vm.assignee), {
-			headers: { 
-				'Content-Type': 'application/json',
-				'Authorization': 'Basic ' + Buffer.from(':' + vm.env.idMappingPat).toString('base64'),
-			},
-		});
+	try {			
+			//console.log("Assignee:" + vm.assignee);
+			//ugly hack to map users, can clean this up later if this board is adopted by the team
+			var aadUser;
+			switch (vm.assignee) {
+				case "lmkeston":
+				  aadUser = "likeston";
+				  break;
+				case "solbkeston":
+				  aadUser = "skeston";
+				  break;
+			/* 	case 2:
+				  aadUser = "Tuesday";
+				  break;
+				case 3:
+				  aadUser = "Wednesday";
+				  break;
+				case 4:
+				  aadUser = "Thursday";
+				  break;
+				case 5:
+				  aadUser = "Friday";
+				  break; */
+			    default:
+					break;
+			  }
 
-		const json = await response.json();
-		var aadUser = jp.value(json, vm.env.idMappingQuery);
-		if (aadUser == undefined) {
-			// console.log("JSON data: " + json);
-			core.setFailed("User mapping for " + vm.assignee + " not found.");
-		} 
-		// Make changes only if AB issue is unassigned or assigned to a different user.
-		else if ( workItem.fields["System.AssignedTo"] == undefined || aadUser != workItem.fields["System.AssignedTo"].uniqueName ) { */
-			
-			console.log("Assignee" + vm.assignee);
-			var aadUser='likeston@microsoft.com'
-
-			/* patchDocument.push({
+			 patchDocument.push({
 				op: "add",
 				path: "/fields/System.AssignedTo",
 				value: aadUser,
-			}); */
+			}); 
 
-			/* patchDocument.push({
+			patchDocument.push({
 				op: "add",
 				path: "/fields/System.History",
 				value:
@@ -244,8 +249,8 @@ async function assign(vm, workItem) {
 					'" target="_new">' +
 					vm.assignee +
 					'</a>.',
-			}); */
-		//}
+			}); 
+		
 	} catch (error) {
 		console.log("Failed to map user ID.");
 		console.log(error);

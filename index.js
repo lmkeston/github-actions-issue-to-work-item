@@ -62,7 +62,7 @@ async function main() {
 		} else {
 			console.log(`Existing work item found: ${workItem.id}`);
 			console.log(vm.action);
-			console.log(vm.assignee);
+			console.log(vm.a);
 		}
 
 		// create right patch document depending on the action tied to the issue
@@ -557,6 +557,7 @@ async function updateIssueBody(vm, workItem) {
 function getValuesFromPayload(payload, env) {
 	// prettier-ignore
 	var vm = {
+		assignee: payload.assignee != undefined ? payload.assignee : "",
 		action: payload.action != undefined ? payload.action : "",
 		url: payload.issue.html_url != undefined ? payload.issue.html_url : "",
 		number: payload.issue.number != undefined ? payload.issue.number : -1,

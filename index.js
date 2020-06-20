@@ -61,8 +61,6 @@ async function main() {
 			issue = vm.env.ghToken != "" ? await updateIssueBody(vm, workItem) : "";
 		} else {
 			console.log(`Existing work item found: ${workItem.id}`);
-			console.log(vm.action);
-			console.log(vm.a);
 		}
 
 		// create right patch document depending on the action tied to the issue
@@ -218,18 +216,24 @@ async function assign(vm, workItem) {
 				case "solbkeston":
 				  aadUser = "skeston@microsoft.com";
 				  break;
-			/* 	case 2:
-				  aadUser = "Tuesday";
+				case "brianamarie":
+				  aadUser = "brswift@microsoft.com";
 				  break;
-				case 3:
-				  aadUser = "Wednesday";
+				case "davenowell":
+				  aadUser = "dapolite@microsoft.com";
 				  break;
-				case 4:
-				  aadUser = "Thursday";
+				case "mattdavis0351":
+				  aadUser = "matdav@microsoft.com";
 				  break;
-				case 5:
-				  aadUser = "Friday";
-				  break; */
+				case "hectorsector":
+				  aadUser = "healfaro@microsoft.com";
+				  break; 
+				case "a-a-ron":
+				  aadUser = "aastewar";
+				  break; 
+			    case "mjcastner":
+				  aadUser = "micastner@microsoft.com";
+				  break; 
 			    default:
 					break;
 			  }

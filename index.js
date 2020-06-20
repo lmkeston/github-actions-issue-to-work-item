@@ -72,7 +72,7 @@ async function main() {
 			case "edited":
 				workItem != null ? await update(vm, workItem) : "";
 				break;
-			case "commented": 
+			case "created": //handle issue comments
 				workItem != null ? await comment(vm, workItem) : "";
 				break;
 			case "closed":

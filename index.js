@@ -82,6 +82,8 @@ async function main() {
 				workItem != null ? await reopen(vm, workItem) : "";
 				break;
 			case "assigned":
+				console.log("Assignee");
+				console.log(vm.assignee);
 				workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "unassigned":

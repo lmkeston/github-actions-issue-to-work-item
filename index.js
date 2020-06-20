@@ -85,7 +85,7 @@ async function main() {
 				break;
 			case "assigned":
 				console.log("Assignee");
-				console.log(vm.assignee);
+				console.log(vm.assignee.login);
 				workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "unassigned":
@@ -557,7 +557,7 @@ async function updateIssueBody(vm, workItem) {
 function getValuesFromPayload(payload, env) {
 	// prettier-ignore
 	var vm = {
-		assignee: payload.assignee != undefined ? payload.assignee : "",
+		assignee: payload.assignee.login != undefined ? payload.assignee.login : "",
 		action: payload.action != undefined ? payload.action : "",
 		url: payload.issue.html_url != undefined ? payload.issue.html_url : "",
 		number: payload.issue.number != undefined ? payload.issue.number : -1,

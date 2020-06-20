@@ -126,11 +126,11 @@ async function create(vm) {
 			path: "/fields/System.Description",
 			value: vm.body,
 		},
-		{
+		/* {
 			op: "add",
 			path: "/fields/System.Tags",
 			value: "GitHub Issue; " + vm.repo_name,
-		},
+		}, */
 		{
 			op: "add",
 			path: "/fields/System.History",

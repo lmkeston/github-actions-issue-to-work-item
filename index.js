@@ -401,11 +401,11 @@ async function reopen(vm, workItem) {
 			value: "New",
 		});
 
-	/* 	patchDocument.push({
+		patchDocument.push({
 			op: "add",
 			path: "/fields/System.History",
 			value: "Issue reopened",
-		}); */
+		});
 	
 	if (patchDocument.length > 0) {
 		return await updateWorkItem(patchDocument, workItem.id, vm.env);

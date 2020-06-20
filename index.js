@@ -61,6 +61,8 @@ async function main() {
 			issue = vm.env.ghToken != "" ? await updateIssueBody(vm, workItem) : "";
 		} else {
 			console.log(`Existing work item found: ${workItem.id}`);
+			console.log(vm.action);
+			console.log(vm.assignee);
 		}
 
 		// create right patch document depending on the action tied to the issue

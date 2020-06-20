@@ -566,7 +566,7 @@ async function updateIssueBody(vm, workItem) {
 function getValuesFromPayload(payload, env) {
 	// prettier-ignore
 	var vm = {
-		assignee: payload.assignee.login != undefined ? payload.assignee.login : "",
+		//assignee: payload.assignee.login != undefined ? payload.assignee.login : "",
 		action: payload.action != undefined ? payload.action : "",
 		url: payload.issue.html_url != undefined ? payload.issue.html_url : "",
 		number: payload.issue.number != undefined ? payload.issue.number : -1,
@@ -579,6 +579,7 @@ function getValuesFromPayload(payload, env) {
 		repo_url: payload.repository.html_url != undefined ? payload.repository.html_url : "",
 		closed_at: payload.issue.closed_at != undefined ? payload.issue.closed_at : null,
 		owner: payload.repository.owner != undefined ? payload.repository.owner.login : "",
+		assignee: "",
 		label: "",
 		comment_text: "",
 		comment_url: "",
@@ -597,6 +598,11 @@ function getValuesFromPayload(payload, env) {
 			bypassRules: env.ado_bypassrules != undefined ? env.ado_bypassrules : false
 		}
 	};
+
+	// assignee is not always part of the payload
+	if (payload.assignee != undefined) {
+			vm.assignee = payload.assignee.login != undefined ? payload.assignee.login : "";
+		}
 
 	// label is not always part of the payload
 	if (payload.label != undefined) {

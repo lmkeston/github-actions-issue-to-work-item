@@ -404,7 +404,7 @@ async function reopen(vm, workItem) {
 		patchDocument.push({
 			op: "add",
 			path: "/fields/System.History",
-			value: "New",
+			value: "Issue reopened",
 		});
 	
 	if (patchDocument.length > 0) {

@@ -204,7 +204,7 @@ async function create(vm) {
 // assign a mapped user
 async function assign(vm, workItem) {
 	let patchDocument = [];
-
+console.log(vm.assignee);
 	try {
 		/* const response = await fetch(util.format(vm.env.idMappingUrl, vm.assignee), {
 			headers: { 
@@ -221,12 +221,15 @@ async function assign(vm, workItem) {
 		} 
 		// Make changes only if AB issue is unassigned or assigned to a different user.
 		else if ( workItem.fields["System.AssignedTo"] == undefined || aadUser != workItem.fields["System.AssignedTo"].uniqueName ) { */
-var aadUser='likeston@microsoft.com'
-			patchDocument.push({
+			
+
+			var aadUser='likeston@microsoft.com'
+
+			/* patchDocument.push({
 				op: "add",
 				path: "/fields/System.AssignedTo",
 				value: aadUser,
-			});
+			}); */
 
 			/* patchDocument.push({
 				op: "add",

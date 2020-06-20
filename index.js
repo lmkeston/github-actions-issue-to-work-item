@@ -213,10 +213,10 @@ async function assign(vm, workItem) {
 			var aadUser;
 			switch (vm.assignee) {
 				case "lmkeston":
-				  aadUser = "likeston";
+				  aadUser = "likeston@microsoft.com";
 				  break;
 				case "solbkeston":
-				  aadUser = "skeston";
+				  aadUser = "skeston@microsoft.com";
 				  break;
 			/* 	case 2:
 				  aadUser = "Tuesday";

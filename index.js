@@ -72,7 +72,7 @@ async function main() {
 			case "edited":
 				workItem != null ? await update(vm, workItem) : "";
 				break;
-			case "created": // adding a comment to an issue
+			case "commented": 
 				workItem != null ? await comment(vm, workItem) : "";
 				break;
 			case "closed":
@@ -83,6 +83,9 @@ async function main() {
 				break;
 			case "assigned":
 				workItem != null ? await assign(vm, workItem) : "";
+				break;
+			case "unassigned":
+				workItem != null ? await unassign(vm, workItem) : "";
 				break;
 			case "labeled":
 				workItem != null ? await label(vm, workItem) : "";

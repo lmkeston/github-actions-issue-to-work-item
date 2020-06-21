@@ -23,7 +23,7 @@ async function main() {
 			env.ado_wit = "User Story";
 			env.ado_close_state = "Closed";
 			env.ado_new_state = "New";
-			env.ado_reopened_state = "New";
+
 
 			console.log("Set values from test payload");
 			vm = getValuesFromPayload(testPayload, env);
@@ -72,7 +72,7 @@ async function main() {
 			case "edited":
 				workItem != null ? await update(vm, workItem) : "";
 				break;
-			case "created": // adding a comment to an issue
+			case "created": //handle issue comments
 				workItem != null ? await comment(vm, workItem) : "";
 				break;
 			case "closed":
@@ -82,7 +82,10 @@ async function main() {
 				workItem != null ? await reopen(vm, workItem) : "";
 				break;
 			case "assigned":
-				console.log("assigned action is not yet implemented");
+				workItem != null ? await assign(vm, workItem) : "";
+				break;
+			case "unassigned":
+				workItem != null ? await unassign(vm, workItem) : "";
 				break;
 			case "labeled":
 				workItem != null ? await label(vm, workItem) : "";
@@ -126,7 +129,7 @@ async function create(vm) {
 		{
 			op: "add",
 			path: "/fields/System.Tags",
-			value: "GitHub Issue; " + vm.repo_name,
+			value: vm.repo_name,
 		},
 		{
 			op: "add",
@@ -196,6 +199,100 @@ async function create(vm) {
 	}
 
 	return workItemSaveResult;
+}
+
+// assign a mapped user
+async function assign(vm, workItem) {
+	let patchDocument = [];
+
+	try {			
+			//console.log("Assignee:" + vm.assignee);
+			//ugly hack to map users, can clean this up later if this board is adopted by the team
+			var aadUser;
+			switch (vm.assignee) {
+				case "lmkeston":
+				  aadUser = "likeston@microsoft.com";
+				  break;
+				case "solbkeston":
+				  aadUser = "skeston@microsoft.com";
+				  break;
+				case "brianamarie":
+				  aadUser = "brswift@microsoft.com";
+				  break;
+				case "davenowell":
+				  aadUser = "dapolite@microsoft.com";
+				  break;
+				case "mattdavis0351":
+				  aadUser = "matdav@microsoft.com";
+				  break;
+				case "hectorsector":
+				  aadUser = "healfaro@microsoft.com";
+				  break; 
+				case "a-a-ron":
+				  aadUser = "aastewar";
+				  break; 
+			    case "mjcastner":
+				  aadUser = "micastner@microsoft.com";
+				  break; 
+			    default:
+					break;
+			  }
+
+			 patchDocument.push({
+				op: "add",
+				path: "/fields/System.AssignedTo",
+				value: aadUser,
+			}); 
+
+			patchDocument.push({
+				op: "add",
+				path: "/fields/System.History",
+				value:
+					'Assigned to GitHub user <a href="https://github.com/' +
+					+ vm.assignee +
+					'" target="_new">' +
+					vm.assignee +
+					'</a>.',
+			}); 
+		
+	} catch (error) {
+		console.log("Failed to map user ID.");
+		console.log(error);
+		core.setFailed(error.toString());
+	}
+
+	if (patchDocument.length > 0) {
+		return await updateWorkItem(patchDocument, workItem.id, vm.env);
+	} else {
+		return null;
+	}
+}
+
+
+// unassign user
+async function unassign(vm, workItem) {
+	let patchDocument = [];
+
+	if (workItem.fields["System.AssignedTo"] != undefined) {
+		patchDocument.push({
+			op: "add",
+			path: "/fields/System.AssignedTo",
+			value: "",
+		});
+
+		patchDocument.push({
+			op: "add",
+			path: "/fields/System.History",
+			value:
+				'GitHub issue unassigned',
+		});
+	}
+
+	if (patchDocument.length > 0) {
+		return await updateWorkItem(patchDocument, workItem.id, vm.env);
+	} else {
+		return null;
+	}
 }
 
 // update existing working item
@@ -297,19 +394,19 @@ async function close(vm, workItem) {
 // reopen existing work item
 async function reopen(vm, workItem) {
 	let patchDocument = [];
-	if (workItem.fields["System.State"] == vm.env.closedState ) {
+
 		patchDocument.push({
 			op: "add",
 			path: "/fields/System.State",
-			value: vm.env.reopenedState,
+			value: "New",
 		});
 
-	//	patchDocument.push({
-//			op: "add",
-//			path: "/fields/System.History",
-//			value: vm.env.reopenedState,
-//		});
-	}
+		patchDocument.push({
+			op: "add",
+			path: "/fields/System.History",
+			value: "Issue reopened",
+		});
+	
 	if (patchDocument.length > 0) {
 		return await updateWorkItem(patchDocument, workItem.id, vm.env);
 	} else {
@@ -381,7 +478,7 @@ async function find(vm) {
 		query:
 			"SELECT [System.Id], [System.WorkItemType], [System.Description], [System.Title], [System.AssignedTo], [System.State], [System.Tags] FROM workitems WHERE [System.TeamProject] = @project AND [System.Title] CONTAINS '(GitHub Issue #" +
 			vm.number +
-			")' AND [System.Tags] CONTAINS 'GitHub Issue' AND [System.Tags] CONTAINS '" +
+			")' AND [System.Tags] CONTAINS '" +
 			vm.repository +
 			"'",
 	};
@@ -469,6 +566,7 @@ async function updateIssueBody(vm, workItem) {
 function getValuesFromPayload(payload, env) {
 	// prettier-ignore
 	var vm = {
+		//assignee: payload.assignee.login != undefined ? payload.assignee.login : "",
 		action: payload.action != undefined ? payload.action : "",
 		url: payload.issue.html_url != undefined ? payload.issue.html_url : "",
 		number: payload.issue.number != undefined ? payload.issue.number : -1,
@@ -481,6 +579,7 @@ function getValuesFromPayload(payload, env) {
 		repo_url: payload.repository.html_url != undefined ? payload.repository.html_url : "",
 		closed_at: payload.issue.closed_at != undefined ? payload.issue.closed_at : null,
 		owner: payload.repository.owner != undefined ? payload.repository.owner.login : "",
+		assignee: "",
 		label: "",
 		comment_text: "",
 		comment_url: "",
@@ -496,10 +595,14 @@ function getValuesFromPayload(payload, env) {
 			wit: env.ado_wit != undefined ? env.ado_wit : "Issue",
 			closedState: env.ado_close_state != undefined ? env.ado_close_state : "Closed",
 			newState: env.ado_new_state != undefined ? env.ado_new_State : "New",
-			reopenedState: env.ado_reopened_state != undefined ? env.ado_reopend_State : "New",
 			bypassRules: env.ado_bypassrules != undefined ? env.ado_bypassrules : false
 		}
 	};
+
+	// assignee is not always part of the payload
+	if (payload.assignee != undefined) {
+			vm.assignee = payload.assignee.login != undefined ? payload.assignee.login : "";
+		}
 
 	// label is not always part of the payload
 	if (payload.label != undefined) {

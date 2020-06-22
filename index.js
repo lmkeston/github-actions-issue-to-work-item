@@ -65,7 +65,6 @@ async function main() {
 
 		// create right patch document depending on the action tied to the issue
 		// update the work item
-		console.log("action:" +  vm.action)
 		switch (vm.action) {
 			case "opened":
 				workItem === null ? await create(vm) : "";
@@ -210,7 +209,7 @@ async function assign(vm, workItem) {
 			//console.log("Assignee:" + vm.assignee);
 			//ugly hack to map users, can clean this up later if this board is adopted by the team
 			var aadUser;
-		 	switch (vm.assignee) {
+			switch (vm.assignee) {
 				case "lmkeston":
 				  aadUser = "likeston@microsoft.com";
 				  break;
@@ -233,11 +232,11 @@ async function assign(vm, workItem) {
 				  aadUser = "aastewar";
 				  break; 
 			    case "mjcastner":
-				  aadUser = "micastner@microsoft.com";
+				  aadUser = "micastne@microsoft.com";
 				  break; 
 			    default:
 					break;
-			  } 
+			  }
 
 			 patchDocument.push({
 				op: "add",

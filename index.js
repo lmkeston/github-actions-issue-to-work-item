@@ -232,7 +232,7 @@ async function assign(vm, workItem) {
 				  aadUser = "aastewar";
 				  break; 
 			    case "mjcastner":
-				  aadUser = "micastner@microsoft.com";
+				  aadUser = "micastne@microsoft.com";
 				  break; 
 			    default:
 					break;

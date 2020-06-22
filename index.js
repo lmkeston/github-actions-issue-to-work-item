@@ -209,8 +209,8 @@ async function assign(vm, workItem) {
 	try {			
 			//console.log("Assignee:" + vm.assignee);
 			//ugly hack to map users, can clean this up later if this board is adopted by the team
-			var aadUser=vm.assignee + '@github.com';
-		/* 	switch (vm.assignee) {
+			var aadUser;
+		 	switch (vm.assignee) {
 				case "lmkeston":
 				  aadUser = "likeston@microsoft.com";
 				  break;
@@ -237,7 +237,7 @@ async function assign(vm, workItem) {
 				  break; 
 			    default:
 					break;
-			  } */
+			  } 
 
 			 patchDocument.push({
 				op: "add",

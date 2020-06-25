@@ -72,7 +72,7 @@ async function main() {
 				break;
 			case "edited":
 				workItem != null ? await update(vm, workItem) : "";				
-				workItem != null ? await assign(vm, workItem) : "";
+				//workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "created": //handle issue comments
 				console.log("comment action is not yet implemented");
@@ -86,7 +86,7 @@ async function main() {
 			case "reopened":
 				workItem != null ? await reopen(vm, workItem) : "";
 				workItem != null ? await update(vm, workItem) : "";
-				workItem != null ? await assign(vm, workItem) : "";
+				//workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "assigned":
 				workItem != null ? await assign(vm, workItem) : "";
@@ -96,9 +96,9 @@ async function main() {
 				workItem != null ? await unassign(vm, workItem) : "";
 				break;
 			case "labeled":
-				workItem != null ? await label(vm, workItem) : "";
+				//workItem != null ? await label(vm, workItem) : "";
 				workItem != null ? await update(vm, workItem) : "";			
-				workItem != null ? await assign(vm, workItem) : "";
+				//workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "unlabeled":
 				workItem != null ? await unlabel(vm, workItem) : "";

@@ -70,25 +70,33 @@ async function main() {
 				workItem === null ? await create(vm) : "";
 				break;
 			case "edited":
-				workItem != null ? await update(vm, workItem) : "";
+				workItem != null ? await update(vm, workItem) : "";				
+				workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "created": //handle issue comments
 				workItem != null ? await comment(vm, workItem) : "";
+				workItem != null ? await update(vm, workItem) : "";				
+				workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "closed":
 				workItem != null ? await close(vm, workItem) : "";
 				break;
 			case "reopened":
 				workItem != null ? await reopen(vm, workItem) : "";
+				workItem != null ? await update(vm, workItem) : "";
+				workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "assigned":
 				workItem != null ? await assign(vm, workItem) : "";
+				workItem != null ? await update(vm, workItem) : "";
 				break;
 			case "unassigned":
 				workItem != null ? await unassign(vm, workItem) : "";
 				break;
 			case "labeled":
 				workItem != null ? await label(vm, workItem) : "";
+				workItem != null ? await update(vm, workItem) : "";			
+				workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "unlabeled":
 				workItem != null ? await unlabel(vm, workItem) : "";
@@ -213,9 +221,9 @@ async function assign(vm, workItem) {
 				case "lmkeston":
 				  aadUser = "likeston@microsoft.com";
 				  break;
-				case "solbkeston":
-				  aadUser = "skeston@microsoft.com";
-				  break;
+				//case "solbkeston":
+				//  aadUser = "skeston@microsoft.com";
+				//  break;
 				case "brianamarie":
 				  aadUser = "brswift@microsoft.com";
 				  break;

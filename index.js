@@ -65,6 +65,7 @@ async function main() {
 
 		// create right patch document depending on the action tied to the issue
 		// update the work item
+		console.log(vm.action)
 		switch (vm.action) {
 			case "opened":
 				workItem === null ? await create(vm) : "";

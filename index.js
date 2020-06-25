@@ -245,6 +245,7 @@ async function assign(vm, workItem) {
 				  aadUser = "micastne@microsoft.com";
 				  break; 
 			    default:
+					aadUser="";
 					break;
 			  }
 

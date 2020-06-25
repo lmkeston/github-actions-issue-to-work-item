@@ -74,9 +74,10 @@ async function main() {
 				workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "created": //handle issue comments
-				workItem != null ? await comment(vm, workItem) : "";
+				console.log("comment action is not yet implemented");
+			/* 	workItem != null ? await comment(vm, workItem) : "";
 				workItem != null ? await update(vm, workItem) : "";				
-				workItem != null ? await assign(vm, workItem) : "";
+				workItem != null ? await assign(vm, workItem) : ""; */
 				break;
 			case "closed":
 				workItem != null ? await close(vm, workItem) : "";

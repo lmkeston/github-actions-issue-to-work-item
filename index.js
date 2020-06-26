@@ -98,9 +98,11 @@ async function main() {
 				break;
 			case "labeled":
 				//workItem != null ? await label(vm, workItem) : "";
+				
+				console.log("made it to labeled:" + vm.assignee.login);
 				workItem != null ? await update(vm, workItem) : "";		
 					
-			console.log("Before assign function. Assignee:" + vm.assignee);
+				console.log("Before assign function. Assignee:" + vm.assignee);
 				workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "unlabeled":
@@ -431,7 +433,6 @@ async function reopen(vm, workItem) {
 // add new label to existing work item
 async function label(vm, workItem) {
 	let patchDocument = [];
-
 	if (!workItem.fields["System.Tags"].includes(vm.label)) {
 		patchDocument.push({
 			op: "add",

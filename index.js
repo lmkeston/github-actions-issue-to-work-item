@@ -98,7 +98,7 @@ async function main() {
 			case "labeled":
 				//workItem != null ? await label(vm, workItem) : "";
 				workItem != null ? await update(vm, workItem) : "";			
-				//workItem != null ? await assign(vm, workItem) : "";
+				workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "unlabeled":
 				workItem != null ? await unlabel(vm, workItem) : "";

@@ -72,7 +72,7 @@ async function main() {
 				break;
 			case "edited":
 				workItem != null ? await update(vm, workItem) : "";				
-				//workItem != null ? await assign(vm, workItem) : "";
+				workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "created": //handle issue comments
 				console.log("comment action is not yet implemented");
@@ -86,7 +86,7 @@ async function main() {
 			case "reopened":
 				workItem != null ? await reopen(vm, workItem) : "";
 				workItem != null ? await update(vm, workItem) : "";
-				//workItem != null ? await assign(vm, workItem) : "";
+				workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "assigned":
 				workItem != null ? await assign(vm, workItem) : "";
@@ -97,11 +97,7 @@ async function main() {
 				break;
 			case "labeled":
 				//workItem != null ? await label(vm, workItem) : "";
-				
-				console.log("made it to labeled:" + vm.assignee.login);
 				workItem != null ? await update(vm, workItem) : "";		
-					
-				console.log("Before assign function. Assignee:" + vm.assignee);
 				workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "unlabeled":
@@ -220,7 +216,6 @@ async function assign(vm, workItem) {
 	let patchDocument = [];
 
 	try {			
-			console.log("Made it to assign. Assignee:" + vm.assignee);
 			//ugly hack to map users, can clean this up later if this board is adopted by the team
 			var aadUser;
 			switch (vm.assignee) {
@@ -580,7 +575,6 @@ async function updateIssueBody(vm, workItem) {
 function getValuesFromPayload(payload, env) {
 	// prettier-ignore
 	var vm = {
-	//	assignee: payload.assignee.login != undefined ? payload.assignee.login : "",
 		action: payload.action != undefined ? payload.action : "",
 		url: payload.issue.html_url != undefined ? payload.issue.html_url : "",
 		number: payload.issue.number != undefined ? payload.issue.number : -1,

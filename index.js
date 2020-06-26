@@ -4,6 +4,7 @@ const azdev = require(`azure-devops-node-api`);
 
 const debug = false; // debug mode for testing...always set to false before doing a commit
 const testPayload = []; // used for debugging, cut and paste payload
+const assignee="";
 
 main();
 
@@ -611,14 +612,14 @@ function getValuesFromPayload(payload, env) {
 			bypassRules: env.ado_bypassrules != undefined ? env.ado_bypassrules : false
 		}
 	};
-	vm.assignee = payload.assignee.login;
+	//vm.assignee = payload.assignee.login;
 
-	// assignee is not always part of the payload
+/* 	// assignee is not always part of the payload
 	/* if (payload.assignee != undefined) {
 			vm.assignee = payload.assignee.login != undefined ? payload.assignee.login : "";
 		} */
 
-	// label is not always part of the payload
+	// label is not always part of the payload */
 	if (payload.label != undefined) {
 		vm.label = payload.label.name != undefined ? payload.label.name : "";
 	}

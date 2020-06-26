@@ -613,6 +613,7 @@ function getValuesFromPayload(payload, env) {
 			bypassRules: env.ado_bypassrules != undefined ? env.ado_bypassrules : false
 		}
 	};
+	console.log("Payload: " + payload.assignee);
 	
  	// assignee is not always part of the payload
 	 if (payload.assignee != undefined) {

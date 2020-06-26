@@ -577,7 +577,7 @@ async function updateIssueBody(vm, workItem) {
 function getValuesFromPayload(payload, env) {
 	// prettier-ignore
 	var vm = {
-		//assignee: payload.assignee.login != undefined ? payload.assignee.login : "",
+		assignee: payload.assignee.login != undefined ? payload.assignee.login : "",
 		action: payload.action != undefined ? payload.action : "",
 		url: payload.issue.html_url != undefined ? payload.issue.html_url : "",
 		number: payload.issue.number != undefined ? payload.issue.number : -1,
@@ -611,9 +611,9 @@ function getValuesFromPayload(payload, env) {
 	};
 
 	// assignee is not always part of the payload
-	if (payload.assignee != undefined) {
+	/* if (payload.assignee != undefined) {
 			vm.assignee = payload.assignee.login != undefined ? payload.assignee.login : "";
-		}
+		} */
 
 	// label is not always part of the payload
 	if (payload.label != undefined) {

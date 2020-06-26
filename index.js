@@ -72,7 +72,7 @@ async function main() {
 				break;
 			case "edited":
 				workItem != null ? await update(vm, workItem) : "";				
-				//workItem != null ? await assign(vm, workItem) : "";
+				workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "created": //handle issue comments
 				console.log("comment action is not yet implemented");
@@ -86,7 +86,7 @@ async function main() {
 			case "reopened":
 				workItem != null ? await reopen(vm, workItem) : "";
 				workItem != null ? await update(vm, workItem) : "";
-				//workItem != null ? await assign(vm, workItem) : "";
+				workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "assigned":
 				workItem != null ? await assign(vm, workItem) : "";
@@ -97,8 +97,8 @@ async function main() {
 				break;
 			case "labeled":
 				//workItem != null ? await label(vm, workItem) : "";
-				workItem != null ? await update(vm, workItem) : "";			
-				//workItem != null ? await assign(vm, workItem) : "";
+				workItem != null ? await update(vm, workItem) : "";		
+				workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "unlabeled":
 				workItem != null ? await unlabel(vm, workItem) : "";
@@ -216,7 +216,6 @@ async function assign(vm, workItem) {
 	let patchDocument = [];
 
 	try {			
-			//console.log("Assignee:" + vm.assignee);
 			//ugly hack to map users, can clean this up later if this board is adopted by the team
 			var aadUser;
 			switch (vm.assignee) {
@@ -428,7 +427,6 @@ async function reopen(vm, workItem) {
 // add new label to existing work item
 async function label(vm, workItem) {
 	let patchDocument = [];
-
 	if (!workItem.fields["System.Tags"].includes(vm.label)) {
 		patchDocument.push({
 			op: "add",
@@ -577,7 +575,6 @@ async function updateIssueBody(vm, workItem) {
 function getValuesFromPayload(payload, env) {
 	// prettier-ignore
 	var vm = {
-		//assignee: payload.assignee.login != undefined ? payload.assignee.login : "",
 		action: payload.action != undefined ? payload.action : "",
 		url: payload.issue.html_url != undefined ? payload.issue.html_url : "",
 		number: payload.issue.number != undefined ? payload.issue.number : -1,
@@ -609,13 +606,13 @@ function getValuesFromPayload(payload, env) {
 			bypassRules: env.ado_bypassrules != undefined ? env.ado_bypassrules : false
 		}
 	};
+	
+ 	// assignee is not always part of the payload
+	 if (payload.issue.assignee != undefined) {
+			vm.assignee = payload.issue.assignee.login != undefined ? payload.issue.assignee.login : "";
+		} 
 
-	// assignee is not always part of the payload
-	if (payload.assignee != undefined) {
-			vm.assignee = payload.assignee.login != undefined ? payload.assignee.login : "";
-		}
-
-	// label is not always part of the payload
+	// label is not always part of the payload */
 	if (payload.label != undefined) {
 		vm.label = payload.label.name != undefined ? payload.label.name : "";
 	}

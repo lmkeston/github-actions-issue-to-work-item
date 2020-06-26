@@ -612,12 +612,11 @@ function getValuesFromPayload(payload, env) {
 			bypassRules: env.ado_bypassrules != undefined ? env.ado_bypassrules : false
 		}
 	};
-	//vm.assignee = payload.assignee.login;
-
-/* 	// assignee is not always part of the payload
-	/* if (payload.assignee != undefined) {
+	
+ 	// assignee is not always part of the payload
+	 if (payload.assignee != undefined) {
 			vm.assignee = payload.assignee.login != undefined ? payload.assignee.login : "";
-		} */
+		} 
 
 	// label is not always part of the payload */
 	if (payload.label != undefined) {

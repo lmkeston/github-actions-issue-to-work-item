@@ -97,7 +97,9 @@ async function main() {
 				break;
 			case "labeled":
 				//workItem != null ? await label(vm, workItem) : "";
-				workItem != null ? await update(vm, workItem) : "";			
+				workItem != null ? await update(vm, workItem) : "";		
+					
+			console.log("Before assign function. Assignee:" + vm.assignee);
 				workItem != null ? await assign(vm, workItem) : "";
 				break;
 			case "unlabeled":

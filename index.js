@@ -216,7 +216,7 @@ async function assign(vm, workItem) {
 	let patchDocument = [];
 
 	try {			
-			//console.log("Assignee:" + vm.assignee);
+			console.log("Made it to assign. Assignee:" + vm.assignee);
 			//ugly hack to map users, can clean this up later if this board is adopted by the team
 			var aadUser;
 			switch (vm.assignee) {

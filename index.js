@@ -46,8 +46,8 @@ async function main() {
 		// based on the title and tags
 		console.log("Check to see if work item already exists");
 		//let workItem = await find(vm);
-		let workItem = await getExistingWorkItem(vm);
-
+		//let workItem = await getExistingWorkItem(vm);
+		timeoutID = setTimeout(getExistingWorkItem, 3000, vm);
 		let issue = "";
 
 		// if workItem == -1 then we have an error during find

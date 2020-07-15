@@ -46,7 +46,10 @@ async function main() {
 		console.log("Check to see if work item already exists");
 		
 		let timeoutId = setTimeout(delay, 10000);
-		let workItem = await find(vm);
+
+		if (timeoutId != null)
+			{let workItem = await find(vm);}
+
 		
 		let issue = "";
 

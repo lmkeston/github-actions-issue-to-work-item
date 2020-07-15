@@ -44,11 +44,8 @@ async function main() {
 		// go check to see if work item already exists in azure devops or not
 		// based on the title and tags
 		console.log("Check to see if work item already exists");
-		//
-		//let workItem = await getExistingWorkItem(vm);
-		//let workItem = setTimeout(getExistingWorkItem, 3000, vm);
 		
-		let timeoutId = setTimeout(delay, 3000);
+		let timeoutId = setTimeout(delay, 10000);
 		let workItem = await find(vm);
 		
 		let issue = "";

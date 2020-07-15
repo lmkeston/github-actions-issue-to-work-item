@@ -7,12 +7,11 @@ const testPayload = []; // used for debugging, cut and paste payload
 
 main();
 
-async function getExistingWorkItem(vm)
+async function delay(vm)
 {
-  let workItem = await find(vm);
-console.log("got to function. " + workItem);
-  return workItem;
-
+ 
+  console.log("running delay");
+  
 }
 
 async function main() {
@@ -49,7 +48,7 @@ async function main() {
 		//let workItem = await getExistingWorkItem(vm);
 		//let workItem = setTimeout(getExistingWorkItem, 3000, vm);
 		
-		let timeoutId = setTimeout(console.log("here"), 3000);
+		let timeoutId = setTimeout(delay, 3000);
 		let workItem = await find(vm);
 		
 		let issue = "";

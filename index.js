@@ -5,13 +5,13 @@ const azdev = require(`azure-devops-node-api`);
 const debug = false; // debug mode for testing...always set to false before doing a commit
 const testPayload = []; // used for debugging, cut and paste payload
 
-main();
+let timeoutId = setTimeout(delay, 10000);
 
 async function delay(vm)
 {
  
   console.log("running delay");
-  
+  main();
 }
 
 async function main() {
@@ -45,12 +45,7 @@ async function main() {
 		// based on the title and tags
 		console.log("Check to see if work item already exists");
 		
-		let timeoutId = setTimeout(delay, 10000);
-
-		if (timeoutId != null)
-			{let workItem = await find(vm);}
-
-		
+		let workItem = await find(vm);
 		let issue = "";
 
 		// if workItem == -1 then we have an error during find

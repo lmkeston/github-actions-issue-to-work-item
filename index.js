@@ -7,6 +7,14 @@ const testPayload = []; // used for debugging, cut and paste payload
 
 main();
 
+async function getExistingWorkItem(vm)
+{
+  let workItem = await find(vm);
+
+  return workItem;
+
+}
+
 async function main() {
 	try {
 		const context = github.context;
@@ -37,7 +45,9 @@ async function main() {
 		// go check to see if work item already exists in azure devops or not
 		// based on the title and tags
 		console.log("Check to see if work item already exists");
-		let workItem = await find(vm);
+		//let workItem = await find(vm);
+		let workItem = await getExistingWorkItem(vm);
+
 		let issue = "";
 
 		// if workItem == -1 then we have an error during find

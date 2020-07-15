@@ -39,7 +39,8 @@ async function main() {
 		// based on the title and tags
 		console.log("Check to see if work item already exists");
 		
-		await new Promise(resolve => setTimeout(resolve, 10000));
+		let delay=Math.floor((Math.random() * 6000) + 1000);
+		await new Promise(resolve => setTimeout(resolve, delay));
 		let workItem = await find(vm);
 		let issue = "";
 

@@ -7,6 +7,7 @@ const testPayload = []; // used for debugging, cut and paste payload
 
 main();
 
+
 async function main() {
 	try {
 		const context = github.context;
@@ -37,6 +38,9 @@ async function main() {
 		// go check to see if work item already exists in azure devops or not
 		// based on the title and tags
 		console.log("Check to see if work item already exists");
+		
+		let delay=Math.floor((Math.random() * 6000) + 1000);
+		await new Promise(resolve => setTimeout(resolve, delay));
 		let workItem = await find(vm);
 		let issue = "";
 

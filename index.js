@@ -10,7 +10,7 @@ main();
 async function getExistingWorkItem(vm)
 {
   let workItem = await find(vm);
-
+console.log("got to function. " + workItem);
   return workItem;
 
 }
